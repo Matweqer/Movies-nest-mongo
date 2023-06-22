@@ -2,6 +2,9 @@ import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 
+import { ServeStaticModule } from '@nestjs/serve-static';
+
+import { join } from 'path';
 import * as process from 'process';
 
 import { AuthModule, MoviesModule, UsersModule } from './modules';
@@ -16,6 +19,10 @@ import { LoggerMiddleware } from './common/middlewares/logger.middleware';
     MongooseModule.forRoot(
       `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@movies.vsww768.mongodb.net/?retryWrites=true&w=majority`,
     ),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'),
+      serveRoot: '/static/',
+    }),
     MoviesModule,
     UsersModule,
     AuthModule,
