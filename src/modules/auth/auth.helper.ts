@@ -2,8 +2,6 @@ import * as bcrypt from 'bcrypt';
 import * as process from 'process';
 
 export class AuthHelper {
-  constructor() {}
-
   static async hashPassword(password: string): Promise<string> {
     return await bcrypt.hash(password, Number(process.env.HASH_SALT));
   }

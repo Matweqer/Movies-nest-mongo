@@ -4,9 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 import * as process from 'process';
 
-import { MoviesModule } from './modules/movies/movies.module';
-import { UsersModule } from './modules/users/users.module';
-import { AuthModule } from './modules/auth/auth.module';
+import { AuthModule, MoviesModule, UsersModule } from './modules';
 
 @Module({
   imports: [
