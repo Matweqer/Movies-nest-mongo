@@ -7,7 +7,10 @@ import { AppModule } from './app.module';
 
 async function start() {
   const port = Number(process.env.PORT);
-  const app = await NestFactory.create(AppModule, { abortOnError: false });
+  const app = await NestFactory.create(AppModule, {
+    abortOnError: false,
+    logger: ['log', 'warn', 'error'],
+  });
 
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
 
