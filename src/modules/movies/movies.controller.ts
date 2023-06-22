@@ -11,7 +11,7 @@ import {
 import { MoviesService } from './movies.service';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
-import { ParamsDto } from './dto/params.dto';
+import { ParamsDto } from '../../common/dto/params.dto';
 
 @Controller('movies')
 export class MoviesController {
