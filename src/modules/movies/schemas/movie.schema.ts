@@ -7,6 +7,9 @@ export class Movie {
 
   @Prop({ required: true })
   description: string;
+
+  @Prop()
+  image: string;
 }
 
 export const MovieSchema = SchemaFactory.createForClass(Movie);

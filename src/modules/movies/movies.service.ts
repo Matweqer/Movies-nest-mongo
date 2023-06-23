@@ -6,6 +6,7 @@ import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
 
 import { Movie } from './schemas/movie.schema';
+import * as fs from 'fs';
 
 @Injectable()
 export class MoviesService {
@@ -14,7 +15,7 @@ export class MoviesService {
   ) {}
 
   async create(createMovieDto: CreateMovieDto): Promise<Movie> {
-    return this.movieModel.create(createMovieDto);
+    return this.movieModel.create({ ...createMovieDto, image: null });
   }
 
   async findAll(): Promise<Movie[]> {
@@ -47,6 +48,29 @@ export class MoviesService {
     if (!movie)
       throw new HttpException('No movie in database', HttpStatus.NOT_FOUND);
 
+    if (movie.image) {
+      const extension = movie.image.slice(movie.image.indexOf('.'));
+      fs.unlink(`public/images/${id}${extension}`, (err) =>
+        console.error(err ? err : 'Image deleted'),
+      );
+    }
+    return movie;
+  }
+
+  async afterUploadImage(
+    id: string,
+    file: Express.Multer.File,
+  ): Promise<Movie> {
+    const movie = await this.movieModel.findById(id).exec();
+    if (!movie) {
+      fs.unlink(`public/images/${file.filename}`, (err) =>
+        console.error(err ? err : 'Image deleted'),
+      );
+      throw new HttpException('No movie in database', HttpStatus.NOT_FOUND);
+    }
+
+    movie.image = `static/images/${file.filename}`;
+    await movie.save();
     return movie;
   }
 }
