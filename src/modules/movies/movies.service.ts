@@ -23,7 +23,7 @@ export class MoviesService {
   }
 
   async findOne(id: string): Promise<Movie> {
-    const movie = await this.movieModel.findById(id);
+    const movie = await this.movieModel.findById(id).exec();
     if (!movie)
       throw new HttpException('No movie in database', HttpStatus.NOT_FOUND);
 

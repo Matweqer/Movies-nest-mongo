@@ -15,6 +15,13 @@ export class AuthService {
   ) {}
 
   async registration(registerUserDto: RegisterUserDto) {
+    const user = await this.userModel
+      .findOne({ email: registerUserDto.email })
+      .exec();
+
+    if (user)
+      throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
+
     const hashedPassword: string = await AuthHelper.hashPassword(
       registerUserDto.password,
     );
@@ -44,7 +51,7 @@ export class AuthService {
         HttpStatus.BAD_REQUEST,
       );
 
-    const payload = { user: user.id };
+    const payload = { userId: user.id };
     return {
       access: await this.jwtService.signAsync(payload),
     };

@@ -19,7 +19,7 @@ import { UpdateMovieDto } from './dto/update-movie.dto';
 import { ParamsDto } from '../../common/dto/params.dto';
 import { AuthGuard } from '../auth/auth.guard';
 import { diskStorage } from 'multer';
-import e from 'express';
+import { Request } from 'express';
 
 @Controller('movies')
 export class MoviesController {
@@ -62,7 +62,7 @@ export class MoviesController {
     new (FileInterceptor('img', {
       storage: diskStorage({
         filename(
-          req: e.Request,
+          req: Request,
           file: Express.Multer.File,
           callback: (error: Error | null, filename: string) => void,
         ) {

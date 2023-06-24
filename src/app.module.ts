@@ -7,7 +7,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import * as process from 'process';
 
-import { AuthModule, MoviesModule, UsersModule } from './modules';
+import { AuthModule, MoviesModule, UsersModule, RatingModule } from './modules';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 
 @Module({
@@ -26,6 +26,7 @@ import { LoggerMiddleware } from './common/middlewares/logger.middleware';
     MoviesModule,
     UsersModule,
     AuthModule,
+    RatingModule,
   ],
   controllers: [],
   providers: [],
